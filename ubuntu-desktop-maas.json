@@ -80,7 +80,7 @@
 		"type": "shell-local",
 		"execute_command": ["powershell.exe", "{{.Vars}} {{.Script}}"],
  		"env_var_format": "$env:%s=\"%s\"; ",
-		"script": "./scripts/convert_img.ps1"
+		"script": "./convert_img.ps1"
 		}
 	]
 }
