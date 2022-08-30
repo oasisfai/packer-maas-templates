@@ -23,7 +23,7 @@ apt-get install -y jq
 mkdir -p /curtin
 
 # install scripts
-for s in curtin-hooks finalize install-custom-packages setup-bootloader; do
+for s in curtin-hooks install-custom-packages; do
   if [ -f "/tmp/$s" ]; then
     mv "/tmp/$s" /curtin/
     chmod 750 "/curtin/$s"
