@@ -68,18 +68,18 @@
 	}
 	],
 	"post-processors": [
-		{
+	{
 		"type": "artifice",
 		"files": [
 			"ubuntu-desktop.vhdx"
 		],
 		"keep_input_artifact": true
-		}
-		{
+	},
+	{
 		"type": "shell-local",
 		"execute_command": ["powershell.exe", "{{.Vars}} {{.Script}}"],
  		"env_var_format": "$env:%s=\"%s\"; ",
 		"script": "./convert_img.ps1"
-		}
+	}
 	]
 }
