@@ -88,7 +88,7 @@
 		{
         		"type": "artifice",
         		"files": ["output-hyperv-iso/Virtual Hard Disks/packer-qemu"]
-
+			"keep_input_artifact": true
       		},
 		{
         		"type": "compress",
