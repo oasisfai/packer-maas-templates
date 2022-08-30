@@ -46,8 +46,7 @@
 	{
 		"type": "file",
 		"sources":  [ 
-			"./scripts/curtin-hooks",
-			"./scripts/finalize"
+			"./scripts/curtin-hooks"
 		],
 		"destination": "/tmp/"
 	},
