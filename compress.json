@@ -1,0 +1,22 @@
+{
+	"builders": [
+	{
+      		"type": "null",
+     		"communicator": "none"
+	}
+	],
+  	
+	"post-processors": [
+  	{
+        		"type": "artifice",
+        		"files": [
+          		"output-hyperv-iso/Virtual Hard Disks/packer-qemu"
+     	   	],
+		"keep_input_artifact": true
+      	},
+	{
+        		"type": "compress",
+        		"output": "custom-ubuntu-desktop.dd.gz"
+      	}
+    	]
+}
