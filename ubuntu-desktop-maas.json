@@ -63,8 +63,8 @@
 		"scripts": [
 			"./scripts/nopassword.sh",
 			"./scripts/curtin.sh",
-                		"./scripts/networking.sh",
-                		"./scripts/cleanup.sh"
+                	"./scripts/networking.sh",
+                	"./scripts/cleanup.sh"
 		],
 		"type": "shell"
 	}
