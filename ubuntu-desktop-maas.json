@@ -82,4 +82,5 @@
  		"env_var_format": "$env:%s=\"%s\"; ",
 		"script": "./scripts/convert_img.ps1"
 		}
+	]
 }
