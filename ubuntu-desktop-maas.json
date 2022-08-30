@@ -1,0 +1,86 @@
+{
+	"variables": {
+		"name": "ubuntu-22.04.1",
+		"http_directory": "http",
+		"ssh_username": "ubuntu",
+		"ssh_password": "ubuntu",
+		"ssh_timeout": "2h"
+	},
+	"builders": [
+	{
+		"type": "hyperv-iso",
+		"vm_name": "ubuntu-desktop",
+		"boot_command": [
+			"<wait>e<wait2>",
+			"<down><wait><down><wait><down><wait>",
+			"<right><right><right><right><right><right><right><right><right><right>",
+			"<right><right><right><right><right><right><right><right><right><right>",
+			"<right><right><right>",
+			"<del><del><del><del><del><del><del><del><del><del>",
+			"<del><del><del><del><del><del><del><del><del><del>",
+			"<del><del><del><del><del><del><del><del><del><del>",
+			"<del><del><del><del><del><del><del><wait2>",
+			"<wait>noprompt url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg automatic<wait2><f10>"
+		],
+		"iso_url": "https://releases.ubuntu.com/22.04.1/ubuntu-22.04.1-desktop-amd64.iso",
+		"iso_checksum": "file:http://releases.ubuntu.com/22.04.1/SHA256SUMS",
+		"iso_target_path": "packer_cache/ubuntu-desktop.iso",
+		"communicator": "ssh",
+		"cpus": 2,
+		"memory": "4096",
+		"disk_size": "21440",
+		"headless": false,
+		"http_directory": "{{user `http_directory`}}",
+		"ssh_username": "{{user `ssh_username`}}",
+		"ssh_password": "{{user `ssh_password`}}",
+		"ssh_handshake_attempts": 500,
+		"ssh_wait_timeout": "45m",
+		"ssh_timeout": "45m",
+		"shutdown_command": "sudo -S shutdown -P now",
+		"switch_name" : "Default Switch",
+		"generation": "2",
+		"skip_export": "true"
+	}
+	],
+	"provisioners": [
+	{
+		"type": "file",
+		"sources":  [ 
+			"./scripts/curtin-hooks",
+			"./scripts/finalize"
+		],
+		"destination": "/tmp/"
+	},
+	{
+            	"environment_vars": [
+                	"HOME_DIR=/home/ubuntu",
+                	"http_proxy={{user `http_proxy`}}",
+                	"https_proxy={{user `https_proxy`}}",
+                	"no_proxy={{user `no_proxy`}}"
+            	],
+		"execute_command": "echo 'ubuntu' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+		"expect_disconnect": true,
+		"scripts": [
+			"./scripts/nopassword.sh",
+			"./scripts/curtin.sh",
+                		"./scripts/networking.sh",
+                		"./scripts/cleanup.sh"
+		],
+		"type": "shell"
+	}
+	],
+	"post-processors": [
+		{
+		"type": "artifice",
+		"files": [
+			"ubuntu-desktop.vhdx"
+		],
+		"keep_input_artifact": true
+		}
+		{
+		"type": "shell-local",
+		"execute_command": ["powershell.exe", "{{.Vars}} {{.Script}}"],
+ 		"env_var_format": "$env:%s=\"%s\"; ",
+		"script": "./scripts/convert_img.ps1"
+		}
+}
