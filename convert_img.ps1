@@ -1,4 +1,4 @@
-Write-Host 'Convert artifact to raw image'
+Write-Host 'Converting artifact to raw format'
 
 $current_path = [string](Get-Location)
 $input_artifact = $current_path + '.\output-hyperv-iso\Virtual Hard Disks\ubuntu-desktop.vhdx'
